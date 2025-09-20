@@ -17,10 +17,10 @@ extern void generic_x64_set_params(void);
 
 #elif (defined(__GNUC__) || defined(__clang__))
 	#define CPUID(cpuInfo, Leaf) \
-			__cpuid((Leaf), &cpuInfo[0], &cpuInfo[1], &cpuInfo[2], &cpuInfo[3])
+			__cpuid((Leaf), cpuInfo[0], cpuInfo[1], cpuInfo[2], cpuInfo[3])
 
 	#define CPUIDEX(cpuInfo, Leaf, SubLeaf) \
-			__cpuid_count((Leaf), (SubLeaf), &cpuInfo[0], &cpuInfo[1], &cpuInfo[2], &cpuInfo[3])
+			__cpuid_count((Leaf), (SubLeaf), cpuInfo[0], cpuInfo[1], cpuInfo[2], cpuInfo[3])
 #else
 	#error "Unsupported Compiler."
 #endif

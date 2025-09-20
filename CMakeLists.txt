@@ -147,16 +147,16 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     elseif (APPLE OR UNIX)
         message(STATUS "Using SYSV-ABI x64 assembly sources")
         set(x64_asm_sources
-            "src/apn/x64/sysv_abi/add_n.asm"
-            "src/apn/x64/sysv_abi/add_n_one.asm"
-            "src/apn/x64/sysv_abi/add_n_one_till_carry.asm"
-            "src/apn/x64/sysv_abi/mul_bc.asm"
-            "src/apn/x64/sysv_abi/addmul_one.asm"
-            "src/apn/x64/sysv_abi/sqr_bc.asm"
-            "src/apn/x64/sysv_abi/sub_n.asm"
-            "src/apn/x64/sysv_abi/sub_n_one.asm"
-            "src/apn/x64/sysv_abi/sub_n_one_till_borrow.asm"
-            "src/apn/x64/sysv_abi/neg.asm"
+            "src/apn/x64/sysv_abi/add_n.S"
+            "src/apn/x64/sysv_abi/add_n_one.S"
+            #"src/apn/x64/sysv_abi/add_n_one_till_carry.S"
+            "src/apn/x64/sysv_abi/mul_bc.S"
+            "src/apn/x64/sysv_abi/addmul_one.S"
+            "src/apn/x64/sysv_abi/sqr_bc.S"
+            "src/apn/x64/sysv_abi/sub_n.S"
+            "src/apn/x64/sysv_abi/sub_n_one.S"
+            #"src/apn/x64/sysv_abi/sub_n_one_till_borrow.S"
+            "src/apn/x64/sysv_abi/neg.S"
         )
     else ()
         message(FATAL_ERROR "Unsupported OS for x64 assembly ABI")
@@ -186,8 +186,13 @@ set(hidden_headers
 
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     set(isa_sources ${x64_specific})
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mavx512f -mbmi2")
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "AARCH64|aarch64")
     
+endif()
+
+if (!MSVC)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
 endif()
 
 set(apac_sources ${apac_c_sources} ${isa_sources} ${hidden_headers})
