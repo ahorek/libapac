@@ -1,5 +1,0 @@
-/home/ahorek/liba/libapac/build/CMakeFiles/apac.dir
-/home/ahorek/liba/libapac/build/CMakeFiles/tests.dir
-/home/ahorek/liba/libapac/build/CMakeFiles/test.dir
-/home/ahorek/liba/libapac/build/CMakeFiles/edit_cache.dir
-/home/ahorek/liba/libapac/build/CMakeFiles/rebuild_cache.dir
