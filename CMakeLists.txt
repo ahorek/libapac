@@ -230,3 +230,8 @@ set(apac_target apac)
 target_compile_definitions(${apac_target} PRIVATE
     "$<$<CONFIG:Release>:APAC_DISABLE_ASSERT>"
 )
+
+enable_testing()
+add_executable(tests tests/apac_tests.c)
+target_link_libraries(tests PRIVATE apac)
+add_test(NAME ApacTests COMMAND tests)

@@ -5,23 +5,31 @@
 	 ----------------------------- UNIT TESTS -----------------------------
 */
 
-static void apn_mul_n_check(void);
-static void apn_mul_check(void);
-static void apn_sqr_check(void);
+int test_apn_add_n() {
+    apn_seg_t a[3] = {1, 2, 3};
+    apn_seg_t b[3] = {4, 5, 6};
+    apn_seg_t res[3];
 
-static void apn_mul_n_check(void)
-{
-	return;
+    apn_add_n(res, a, b, 3);
+
+    apn_seg_t expected[3] = {5, 7, 9};
+
+    if (apn_cmp(res, expected, 3) == 0) {
+        printf("apn_add_n test passed!\n");
+        return 0;
+    } else {
+        printf("apn_add_n test failed!\n");
+        return 1;
+    }
 }
 
-static void apn_mul_check(void)
-{
-	return;
+
+int main() {
+    apacGetCPUSpec();
+    if (test_apn_add_n()) {
+	    return 1;
+    }
+
+    printf("All tests passed!\n");
+    return 0;
 }
-
-int main(int argc, char* argv[])
-{
-
-	return 0;
-}
-
