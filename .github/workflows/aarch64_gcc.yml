@@ -4,8 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest-aarch64
-    arch: aarch64
+    runs-on: ubuntu-latest-arm
 
     name: >-
       ubuntu-latest-aarch64
@@ -39,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ubuntu-latest
+          name: aarch64
           retention-days: 1
           path: |
             ./build/*

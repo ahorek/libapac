@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        shell: pwsh
+        shell: bash
 
     strategy:
       fail-fast: false
@@ -41,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-latest
+          name: windows
           retention-days: 1
           path: |
-            ./build/*
+            ./build/Release/*
