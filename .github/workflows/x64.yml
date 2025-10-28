@@ -28,7 +28,7 @@ jobs:
           mkdir build
           cd build
           cmake ..
-          cmake --build
+          cmake --build .
       
       - name: Tests
         run: |
