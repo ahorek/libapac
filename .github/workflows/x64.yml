@@ -1,6 +1,6 @@
 name: x64 Linux
 
-on: [push pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
