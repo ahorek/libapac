@@ -1,0 +1,44 @@
+name: x64 Windows
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    name: >-
+      windows-latest
+
+    defaults:
+      run:
+        shell: pwsh
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Print msvc version
+        run: |
+          cl
+
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A x64
+          cmake --build . --config Release
+      
+      - name: Tests
+        run: |
+          cd build
+          ctest -C Release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-latest
+          retention-days: 1
+          path: |
+            ./build/*
