@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/add_n.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/add_n_one.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/addmul_one.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/mul_bc.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/neg.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/sqr_bc.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/sub_n.S
+
+/home/ahorek/liba/libapac/src/apn/x64/sysv_abi/sub_n_one.S
+
