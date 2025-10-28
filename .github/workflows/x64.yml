@@ -4,10 +4,10 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     name: >-
-      ubuntu-20.04
+      ubuntu-latest
 
     defaults:
       run:
@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ubuntu-20.04
+          name: ubuntu-latest
           retention-days: 1
           path: |
             ./build/*
