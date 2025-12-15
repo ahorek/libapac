@@ -24,7 +24,7 @@ LEFT_SHIFT_LT64 SEGMENT ALIGN(64) 'CODE'
 
 lshift_lt64_zen4 PROC FRAME
 
-    pusb    rbx
+    push    rbx
 .pushreg    rbx
 .endprolog
 
