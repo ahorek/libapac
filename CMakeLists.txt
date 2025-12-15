@@ -195,6 +195,18 @@ set(hidden_headers
     # AArch64 SPECIFIC
 )
 
+# --- BUILDING DLL/STATIC -------------------------------------------------------
+
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64") 
+    set(isa_sources ${x64_specific})
+elseif (MSVC AND MSVC_C_ARCHITECTURE_ID STREQUAL "x64")
+    set(isa_sources ${x64_specific})
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "AARCH64|aarch64")
+    
+endif()
+
+set(apac_sources ${apac_c_sources} ${isa_sources} ${hidden_headers})
+
 # --- STRIP PATHS FROM __FILE__ -------------------------------------------------\
 
 foreach(src_file ${apac_sources})
@@ -205,16 +217,6 @@ foreach(src_file ${apac_sources})
         COMPILE_DEFINITIONS "__FILE__=\"${file_name}\""
     )
 endforeach()
-
-# --- BUILDING DLL/STATIC -------------------------------------------------------
-
-if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
-    set(isa_sources ${x64_specific})
-elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "AARCH64|aarch64")
-    
-endif()
-
-set(apac_sources ${apac_c_sources} ${isa_sources} ${hidden_headers})
 
 # Build Shared/Static Library
 if(BUILD_SHARED_LIB)
