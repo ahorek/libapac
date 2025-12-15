@@ -121,7 +121,7 @@ before_loop:
 
     ; loop never entered if size is less than 2
 
-loop:
+main_loop:
 
     mov     r10, QWORD PTR [rdx - 8]
     mov     r11, QWORD PTR [rdx]
@@ -131,7 +131,7 @@ loop:
     sub     rdx, 8
     sub     rbx, 8
     dec     r8
-    jnz     loop
+    jnz     main_loop
 
 after_loop:
 
