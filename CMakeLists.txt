@@ -130,7 +130,7 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     set(x64_c_sources
         "src/apn/x64/set.c"
         "src/apn/x64/cpy.c"
-        "src/apn/x64/is_equal.c"
+        #"src/apn/x64/is_equal.c"
         "src/apn/x64/is_zero.c"
         "src/apn/x64/recip_word_calc.c"
         "src/apn/x64/udiv.c"
