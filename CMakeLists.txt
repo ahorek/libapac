@@ -158,8 +158,8 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     elseif (APPLE OR UNIX)
         message(STATUS "Using SYSV-ABI x64 assembly sources")
         set(x64_asm_sources
-            "src/apn/x64/sysv_abi/add_n.asm"
-            "src/apn/x64/sysv_abi/sub_n.asm"
+            "src/apn/x64/sysv_abi/add_n.s"
+            "src/apn/x64/sysv_abi/sub_n.s"
         )
         #set(x64_asm_sources
         #    "src/apn/x64/ms_abi/add_n.asm"
