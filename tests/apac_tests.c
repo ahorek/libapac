@@ -25,7 +25,7 @@ int test_apn_add_n() {
 
 
 int main() {
-    apacGetCPUSpec();
+    apacInit();
     if (test_apn_add_n()) {
 	    return 1;
     }
