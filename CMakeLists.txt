@@ -36,6 +36,7 @@ if (WIN32)
     if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
         message(STATUS "Enabling MASM64 assembler")
         enable_language(ASM_MASM)
+        add_compile_definitions(_AMD64_)
 
     endif()
 
@@ -198,8 +199,6 @@ set(hidden_headers
 # --- BUILDING DLL/STATIC -------------------------------------------------------
 
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64") 
-    set(isa_sources ${x64_specific})
-elseif (MSVC AND MSVC_C_ARCHITECTURE_ID STREQUAL "x64")
     set(isa_sources ${x64_specific})
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "AARCH64|aarch64")
     
