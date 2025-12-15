@@ -174,11 +174,17 @@ int is_zero_sse2_4unroll(
         a2 = _mm_or_si128(a2, a3);
         a0 = _mm_or_si128(a0, a2);
 
-        // Test if all zeros
-        int result = _mm_testz_si128(a0, a0);
-
-        if (!result)
+        __m128i tmp = _mm_shuffle_epi32(a0, _MM_SHUFFLE(1, 0, 3, 2));
+        a0 = _mm_or_si128(a0, tmp);
+        tmp = _mm_shuffle_epi32(a0, _MM_SHUFFLE(2, 3, 0, 1));
+        a0 = _mm_or_si128(a0, tmp);
+        if (_mm_cvtsi128_si32(a0) != 0)
             return 1;
+
+        // Test if all zeros SSE4
+        // int result = _mm_testz_si128(a0, a0);
+        // if (!result)
+        //    return 1;
 
         counter += 8;
     }
