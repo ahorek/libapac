@@ -63,7 +63,7 @@ apac_err apn_div(
     }
     else if (size_dvsr == 1)
     {
-        remainder[0] = apn_div_one(quotient, remainder, dividend, divisor[0], size_divd);
+        remainder[0] = apn_div_one(quotient, dividend, divisor[0], size_divd);
         return APAC_OK;
     }
 
