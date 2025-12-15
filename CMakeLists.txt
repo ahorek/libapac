@@ -208,15 +208,14 @@ endif()
 set(apac_sources ${apac_c_sources} ${isa_sources} ${hidden_headers})
 
 # --- STRIP PATHS FROM __FILE__ -------------------------------------------------\
-
-foreach(src_file ${apac_sources})
-    get_filename_component(file_name ${src_file} NAME)
-    set_source_files_properties(
-        ${src_file}
-        PROPERTIES
-        COMPILE_DEFINITIONS "__FILE__=\"${file_name}\""
-    )
-endforeach()
+#foreach(src_file ${apac_sources})
+#    get_filename_component(file_name ${src_file} NAME)
+#    set_source_files_properties(
+#        ${src_file}
+#        PROPERTIES
+#        COMPILE_DEFINITIONS "__FILE__=\"${file_name}\""
+#    )
+#endforeach()
 
 # Build Shared/Static Library
 if(BUILD_SHARED_LIB)
