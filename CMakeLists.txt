@@ -107,7 +107,7 @@ set(apac_c_sources
     "src/apn/commons/apn_addmul_one.c"
     "src/apn/commons/apn_submul_one.c"
     "src/apn/commons/apn_shift.c"
-    "src/apn/commons/apn_is_equal.c"
+    #"src/apn/commons/apn_is_equal.c"
     "src/apn/commons/apn_is_zero.c"
     "src/apn/commons/apn_clamp.c"
     "src/apn/commons/apn_div.c"
