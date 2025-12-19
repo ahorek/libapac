@@ -36,7 +36,6 @@ jobs:
       - name: Tests
         run: |
           cd build
-          cat /proc/cpuinfo
           ctest -V -C Release
 
       - name: Upload artifact
