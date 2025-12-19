@@ -36,7 +36,7 @@ jobs:
       - name: Tests
         run: |
           cd build
-          wmic cpu list full
+          cat /proc/cpuinfo
           ctest -V -C Release
 
       - name: Upload artifact
