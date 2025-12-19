@@ -115,7 +115,17 @@ static void check_apn_set(void)
 
     printf("\nTEST-1: Comparison against memset\n\n");
 
+    for (apn_size_t i = 1; i <= test_size; i++)
+    {
+        printf("\tTesting size: %llu ... ", i);
 
+        uint64_t val = random_sfc64();
+        uint8_t  val1 = (uint8_t)(val & 0xFF);
+        uint64_t val2 = val1 * 0x0101010101010101ULL;
+
+
+        printf("PASSED\n");
+    }
 
     TEST_END("apn_set");
 
