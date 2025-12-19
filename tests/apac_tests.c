@@ -123,6 +123,9 @@ static void check_apn_set(void)
         uint8_t  val1 = (uint8_t)(val & 0xFF);
         uint64_t val2 = val1 * 0x0101010101010101ULL;
 
+        memset(op1, val1, sizeof(apn_seg_t) * i);
+        apn_set(op2, i, val2);
+
 
         printf("PASSED\n");
     }
