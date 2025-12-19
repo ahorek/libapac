@@ -1,5 +1,6 @@
 // change this header inclusion as per need
-#include "../include/apac.h"
+#include "apac.h"
+#include <memory.h>
 
 /*
      ----------------------------- UNIT TESTS -----------------------------
@@ -25,7 +26,7 @@ int test_apn_add_n() {
 
 
 int main() {
-    apacGetCPUSpec();
+    apacInit();
     if (test_apn_add_n()) {
 	    return 1;
     }
