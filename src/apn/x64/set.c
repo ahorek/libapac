@@ -9,6 +9,8 @@ void set_avx512f_4unroll(
 	apn_seg_t val
 )
 {
+
+	printf("avx512");
 	__m512i my_val = _mm512_set1_epi64(val);
 
 	apn_size_t blocks = size & ((apn_size_t)-32);
@@ -43,6 +45,8 @@ void set_avx_4unroll(
 	apn_seg_t val
 )
 {
+printf("avx");
+
 	__m256i my_val = _mm256_set1_epi64x(val);
 
 	apn_size_t blocks = size & ((apn_size_t)-16);
@@ -76,6 +80,8 @@ void set_sse2_4unroll(
 	apn_seg_t val
 )
 {
+	printf("invoked");
+
 	__m128i my_val = _mm_set1_epi64x(val);
 
 	apn_size_t blocks = size & ((apn_size_t) - 8);

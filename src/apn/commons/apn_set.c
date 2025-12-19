@@ -8,6 +8,8 @@ void apn_set(
 	apn_seg_t val
 )
 {
+
+	printf("start");
 	APAC_ASSERT(result != NULL);
 	APAC_ASSERT(size != 0);
 	APAC_DETAILED_ASSERT(curr_cpu.apn_set_ptr != NULL,
