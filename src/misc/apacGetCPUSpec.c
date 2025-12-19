@@ -47,16 +47,24 @@ void apacGetCPUSpec(void)
 		int baseFamily = (signature >> 8) & 0xF;
 		int extendedFamily = (signature >> 20) & 0xFF;
 		int family = (baseFamily < 0xF) ? baseFamily : baseFamily + extendedFamily;
-		printf("%d", baseFamily);
-		printf("%d", extendedFamily);
-		printf("%d", family);
+		int model  = ((signature >> 4) & 0xf) | (((signature >> 16) & 0xf) << 4);
 
 		switch (family)
 		{
-		case 0x19:				// Zen 4 Uarch
-			zen4_set_params();
+		case 0x1a:              // Zen 5 Uarch
+		  zen4_set_params();
+		  break;
+		case 0x19:
+		    if (model >= 0x61) { // Zen 4 Uarch
+			  zen4_set_params();
+			}
+			else { // Zen 3 Uarch
+			  generic_x64_set_params();
+			}
 			break;
-
+        case 0x17:  // Zen 1/2 Uarch
+		    generic_x64_set_params();
+			break;
 		default:
 			generic_x64_set_params();
 			break;
