@@ -5,6 +5,7 @@ extern apac_cpu_params curr_cpu;
 
 void zen4_set_params(void)
 {
+	printf("zen");
 	curr_cpu.karatsuba_mul_balanced_threshold = 28;
 	curr_cpu.karatsuba_mul_unbalanced_threshold = 33;
 	curr_cpu.karatsuba_sqr_threshold = 58;
@@ -33,6 +34,7 @@ void zen4_set_params(void)
 
 void generic_x64_set_params(void)
 {
+	printf("generic");
 	// random cut-off thresholds xD
 	curr_cpu.karatsuba_mul_balanced_threshold = 20;
 	curr_cpu.karatsuba_mul_unbalanced_threshold = 30;

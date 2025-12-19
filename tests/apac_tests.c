@@ -124,7 +124,7 @@ static void check_apn_set(void)
         uint64_t val2 = val1 * 0x0101010101010101ULL;
 
         memset(op1, val1, sizeof(apn_seg_t) * i);
-        //apn_set(op2, i, val2);
+        apn_set(op2, i, val2);
 
         int cmp_res = memcmp(op1, op2, sizeof(apn_seg_t) * i);
 
