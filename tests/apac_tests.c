@@ -107,11 +107,20 @@ static void check_apn_set(void)
 {
     TEST_START("apn_set");
 
+    apn_seg_t* op1 = NULL, * op2 = NULL;
+    apn_size_t test_size = 512ULL;
+
+    MALLOC_AND_CHECK(op1, test_size);
+    MALLOC_AND_CHECK(op2, test_size);
+
+    printf("\nTEST-1: Comparison against memset\n\n");
+
 
 
     TEST_END("apn_set");
 
-
+    apac_free(op2);
+    apac_free(op1);
 }
 
 static void check_apn_cmp(void)
@@ -458,7 +467,7 @@ int main(void)
 	apacInit();
 	random_sfc64_seed(0x117ULL);
 
-    check_apn_cmp();
+    check_apn_set();
 
 
 	return 0;
