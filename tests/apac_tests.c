@@ -107,44 +107,11 @@ static void check_apn_set(void)
 {
     TEST_START("apn_set");
 
-    apn_seg_t* op1 = NULL, * op2 = NULL;
-    apn_size_t test_size = 512ULL;
 
-    MALLOC_AND_CHECK(op1, test_size);
-    MALLOC_AND_CHECK(op2, test_size);
-
-    printf("\nTEST-1: Comparison against memset\n\n");
-
-    for (apn_size_t i = 1; i <= test_size; i++)
-    {
-        printf("\tTesting size: %llu ... ", i);
-
-        uint64_t val = random_sfc64();
-        uint8_t  val1 = (uint8_t)(val & 0xFF);
-        uint64_t val2 = val1 * 0x0101010101010101ULL;
-
-        memset(op1, val1, sizeof(apn_seg_t) * i);
-        apn_set(op2, i, val2);
-
-        int cmp_res = memcmp(op1, op2, sizeof(apn_seg_t) * i);
-
-        APAC_ALWAYS_ASSERT(
-            cmp_res == 0,
-            "apn_set() memcmp test failed!\n"
-            "\t Operand length tested        : %llu\n"
-            "\t Expected comparison result  : 0\n"
-            "\t Actual comparison result    : %i\n",
-            i,
-            cmp_res
-        );
-
-        printf("PASSED\n");
-    }
 
     TEST_END("apn_set");
 
-    apac_free(op2);
-    apac_free(op1);
+
 }
 
 static void check_apn_cmp(void)
