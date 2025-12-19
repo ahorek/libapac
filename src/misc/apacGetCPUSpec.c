@@ -47,6 +47,9 @@ void apacGetCPUSpec(void)
 		int baseFamily = (signature >> 8) & 0xF;
 		int extendedFamily = (signature >> 20) & 0xFF;
 		int family = (baseFamily < 0xF) ? baseFamily : baseFamily + extendedFamily;
+		pritnf("%d", baseFamily);
+		pritnf("%d", extendedFamily);
+		pritnf("%d", family);
 
 		switch (family)
 		{
