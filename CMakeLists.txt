@@ -108,7 +108,6 @@ set(apac_c_sources
     "src/apn/commons/apn_addmul_one.c"
     "src/apn/commons/apn_submul_one.c"
     "src/apn/commons/apn_shift.c"
-    #"src/apn/commons/apn_is_equal.c"
     "src/apn/commons/apn_is_zero.c"
     "src/apn/commons/apn_clamp.c"
     "src/apn/commons/apn_div.c"
@@ -122,6 +121,7 @@ set(apac_c_sources
     "src/apn/commons/karatsuba_mul.c"
     "src/apn/commons/basecase_sqr.c"
     "src/apn/commons/karatsuba_sqr.c"
+    "src/apn/commons/div_helpers.c"
 )
     
 # --- x64 SPECIFIC SOURCES ------------------------------------------------------
@@ -130,11 +130,9 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     # Common C sources (always used on x64)
     set(x64_c_sources
         "src/apn/x64/set.c"
+
         "src/apn/x64/cpy.c"
-        #"src/apn/x64/is_equal.c"
         "src/apn/x64/is_zero.c"
-        "src/apn/x64/recip_word_calc.c"
-        "src/apn/x64/udiv.c"
         "src/apn/x64/cmp.c"
         "src/apn/x64/cpu_params.c"
     )

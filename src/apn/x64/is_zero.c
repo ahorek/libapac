@@ -96,22 +96,22 @@ int is_zero_avx2_4unroll(
             _mm256_loadu_si256((const __m256i*) & op1[counter]),
             zero_reg
         );
-        
+
         __m256i a1 = _mm256_or_si256(
-            _mm256_loadu_si256((const __m256i*) & op1[counter + 8]),
+            _mm256_loadu_si256((const __m256i*) & op1[counter + 4]),
             zero_reg
         );
 
         __m256i a2 = _mm256_or_si256(
-            _mm256_loadu_si256((const __m256i*) & op1[counter + 16]),
-            zero_reg
-        );
-    
-        __m256i a3 = _mm256_or_si256(
-            _mm256_loadu_si256((const __m256i*) & op1[counter + 24]),
+            _mm256_loadu_si256((const __m256i*) & op1[counter + 8]),
             zero_reg
         );
 
+        __m256i a3 = _mm256_or_si256(
+            _mm256_loadu_si256((const __m256i*) & op1[counter + 12]),
+            zero_reg
+        );
+        
         a0 = _mm256_or_si256(a0, a1);
         a2 = _mm256_or_si256(a2, a3);
         a0 = _mm256_or_si256(a0, a2);
@@ -174,17 +174,12 @@ int is_zero_sse2_4unroll(
         a2 = _mm_or_si128(a2, a3);
         a0 = _mm_or_si128(a0, a2);
 
-        __m128i tmp = _mm_shuffle_epi32(a0, _MM_SHUFFLE(1, 0, 3, 2));
-        a0 = _mm_or_si128(a0, tmp);
-        tmp = _mm_shuffle_epi32(a0, _MM_SHUFFLE(2, 3, 0, 1));
-        a0 = _mm_or_si128(a0, tmp);
-        if (_mm_cvtsi128_si32(a0) != 0)
-            return 1;
+        // Test if all zeros
+        __m128i val = _mm_cmpeq_epi8(a0, zero_reg);
+        int result = _mm_movemask_epi8(val);
 
-        // Test if all zeros SSE4
-        // int result = _mm_testz_si128(a0, a0);
-        // if (!result)
-        //    return 1;
+        if (result != 0xFFFF)
+            return 1;
 
         counter += 8;
     }

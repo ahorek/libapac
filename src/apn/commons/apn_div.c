@@ -13,7 +13,7 @@ apac_err apn_div(
     apn_seg_t* quotient,        // must be (size_divd - size_dvsr + 1) length
     apn_seg_t* remainder,       // must be size_dvsr length
     const apn_seg_t* dividend,
-    const apn_seg_t* divisor,
+    apn_seg_t* divisor,
     apn_size_t size_divd,
     apn_size_t size_dvsr
 )
@@ -70,7 +70,7 @@ apac_err apn_div(
 full_division:
 
     int shift_to_normalize = 0;         // flag if left-shift to normalize happened
-    int dvsr_shift_val = 0;
+    uint32_t dvsr_shift_val = 0;
 
     APAC_DETAILED_ASSERT(apac_malloc != NULL && apac_free != NULL,
         "Memory allocator not initialized: apacInit()/apacSetMemFuncs() not invoked!"
@@ -91,8 +91,8 @@ full_division:
     
     if (!(divisor[size_dvsr - 1] & (1ULL << 63)))
     {
-        CLZ64(dvsr_shift_val, divisor[size_dvsr - 1]);
-        APAC_ASSERT(dvsr_shift_val != -1);
+        CLZ64(divisor[size_dvsr - 1], dvsr_shift_val);;
+        APAC_ASSERT(dvsr_shift_val != 64);
 
         apn_seg_t out_val = apn_lshift(divisor, divisor, size_dvsr, (apn_seg_t)dvsr_shift_val);
         APAC_ASSERT(out_val == 0);
@@ -153,8 +153,9 @@ full_division:
 
     if (shift_to_normalize)
     {
+        apn_seg_t shift_down = apn_rshift(divisor, divisor, size_dvsr, dvsr_shift_val);
         apn_seg_t shift_out = apn_rshift(remainder, remainder, size_rmdr, (apn_seg_t)dvsr_shift_val);
-        APAC_ASSERT(shift_out == 0);
+        APAC_ASSERT(shift_out == 0 && shift_down == 0);
     }
 
     return APAC_OK;

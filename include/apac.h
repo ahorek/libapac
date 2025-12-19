@@ -18,7 +18,7 @@
 
     #if defined(_MSC_VER)
 
-        #include <processthreadsapi.h> // Win32 Threads
+        #include <Windows.h> // for win32 threads
 
         #if defined(_M_X64) || defined(_M_AMD64)
 
@@ -126,7 +126,7 @@ typedef enum apac_err
             {                                               \
                 fprintf(                                    \
                     stderr,                                 \
-                    "\nAPAC ASSERTION FAILED!\n"            \
+                    "\n\nAPAC ASSERTION FAILED!\n"          \
                     "ASSERTION: %s\n"                       \
                     "FILE: %s\nLINE: %d\n",                 \
                     #expr, __FILE__, __LINE__               \
@@ -135,7 +135,7 @@ typedef enum apac_err
                 {                                           \
                     fprintf(                                \
                         stderr,                             \
-                        "MESSAGE: "                         \
+                        "DETAILS: "                         \
                         fmt "\n",                           \
                         ##__VA_ARGS__                       \
                     );                                      \
@@ -941,7 +941,7 @@ APAC_API apac_err apn_div(
     apn_seg_t* quotient,
     apn_seg_t* remainder,
     const apn_seg_t* dividend,
-    const apn_seg_t* divisor,
+    apn_seg_t* divisor,
     apn_size_t size_divd,
     apn_size_t size_dvsr
 );
