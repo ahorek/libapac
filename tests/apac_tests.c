@@ -617,6 +617,7 @@ int main(void)
 	apacInit();
 	random_sfc64_seed(0x117ULL);
 
+    check_apn_set();
 
 	return 0;
 }
