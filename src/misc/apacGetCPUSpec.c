@@ -13,19 +13,19 @@ extern void generic_x64_set_params(void);
 
 #if defined(_MSC_VER)
 
-#define CPUID(cpuInfo, Leaf)			__cpuid(cpuInfo, Leaf)
-#define CPUIDEX(cpuInfo, Leaf, SubLeaf) __cpuidex(cpuInfo, Leaf, SubLeaf)
+	#define CPUID(cpuInfo, Leaf)			__cpuid(cpuInfo, Leaf)
+	#define CPUIDEX(cpuInfo, Leaf, SubLeaf) __cpuidex(cpuInfo, Leaf, SubLeaf)
 
 #elif (defined(__GNUC__) || defined(__clang__))
 
-#define CPUID(cpuInfo, Leaf) \
-			__cpuid((Leaf), &cpuInfo[0], &cpuInfo[1], &cpuInfo[2], &cpuInfo[3])
+	#define CPUID(cpuInfo, Leaf) \
+			__cpuid((Leaf), cpuInfo[0], cpuInfo[1], cpuInfo[2], cpuInfo[3])
 
-#define CPUIDEX(cpuInfo, Leaf, SubLeaf) \
-			__cpuid_count((Leaf), (SubLeaf), &cpuInfo[0], &cpuInfo[1], &cpuInfo[2], &cpuInfo[3])
+	#define CPUIDEX(cpuInfo, Leaf, SubLeaf) \
+			__cpuid_count((Leaf), (SubLeaf), cpuInfo[0], cpuInfo[1], cpuInfo[2], cpuInfo[3])
 
 #else
-#error "Unsupported Compiler!"
+	#error "Unsupported Compiler!"
 #endif
 
 void apacGetCPUSpec(void)
@@ -34,63 +34,42 @@ void apacGetCPUSpec(void)
 
 	CPUID(cpuInfo, 0x0);
 
-	// ================= AMD x86-64 =================
 	if (
 		cpuInfo[1] == 0x68747541 &&		// 'Auth'
 		cpuInfo[3] == 0x69746E65 &&		// 'enti'
 		cpuInfo[2] == 0x444D4163		// 'cAMD'
 		)
 	{
+		// Get CPU signature and extract family
 		CPUID(cpuInfo, 0x1);
 		int signature = cpuInfo[0];
 
 		int baseFamily = (signature >> 8) & 0xF;
 		int extendedFamily = (signature >> 20) & 0xFF;
-		int family = (baseFamily < 0xF)
-			? baseFamily
-			: baseFamily + extendedFamily;
-
-		int model = ((signature >> 4) & 0xF) |
-			(((signature >> 16) & 0xF) << 4);
-
-		CPUID(cpuInfo, 0x7);
-		uint8_t has_avx512 = (cpuInfo[1] & (1 << 16)) != 0;
+		int family = (baseFamily < 0xF) ? baseFamily : baseFamily + extendedFamily;
+		int model  = ((signature >> 4) & 0xf) | (((signature >> 16) & 0xf) << 4);
 
 		switch (family)
 		{
-		case 0x1A:   // Zen 5
-			zen4_set_params();
-			break;
-
-		case 0x19:   // Zen 3 / Zen 4
-			if (model >= 0x61)
-			{
-				// Unambiguous Zen 4 / Zen 4c
-				zen4_set_params();
+		case 0x1a:              // Zen 5 Uarch
+		  zen4_set_params();
+		  break;
+		case 0x19:
+		    if (model >= 0x61) { // Zen 4 Uarch
+			  zen4_set_params();
 			}
-			else if (model >= 0x10 && has_avx512)
-			{
-				// Storm Peak (TR 7000), Genoa (EPYC 9004)
-				zen4_set_params();
-			}
-			else
-			{
-				// Zen 3 / Zen 3+
-				generic_x64_set_params();
+			else { // Zen 3 Uarch
+			  generic_x64_set_params();
 			}
 			break;
-
-		case 0x17:   // Zen 1 / Zen 2
-			generic_x64_set_params();
+        case 0x17:  // Zen 1/2 Uarch
+		    generic_x64_set_params();
 			break;
-
 		default:
 			generic_x64_set_params();
 			break;
 		}
 	}
-
-	// ================= Intel x86-64 =================
 	else if (
 		cpuInfo[1] == 0x756E6547 &&		// 'Genu'
 		cpuInfo[3] == 0x49656E69 &&		// 'ineI'
@@ -102,13 +81,11 @@ void apacGetCPUSpec(void)
 
 		int baseFamily = (signature >> 8) & 0xF;
 		int extendedFamily = (signature >> 20) & 0xFF;
-		int family = (baseFamily != 0xF)
-			? baseFamily
-			: baseFamily + extendedFamily;
+		int family = (baseFamily != 0xF) ? baseFamily : baseFamily + extendedFamily;
 
 		switch (family)
 		{
-		case 0x06:
+		case 0x6:
 		{
 			int baseModel = (signature >> 4) & 0xF;
 			int extendedModel = (signature >> 16) & 0xF;
@@ -128,13 +105,12 @@ void apacGetCPUSpec(void)
 			break;
 		}
 	}
-
-	// ================= Unknown x86-64 =================
 	else
 	{
 		generic_x64_set_params();
 	}
-}
 
+	return;
+}
 
 #endif

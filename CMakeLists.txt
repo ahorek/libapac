@@ -36,7 +36,7 @@ if (WIN32)
     if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
         message(STATUS "Enabling MASM64 assembler")
         enable_language(ASM_MASM)
-
+        # add_compile_definitions(_AMD64_)
     endif()
 
 elseif (APPLE)
@@ -226,3 +226,12 @@ else()
 endif()
 
 set(apac_target apac)
+
+enable_testing()
+add_executable(tests tests/apac_tests.c)
+target_include_directories(tests
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
+)
+target_link_libraries(tests PRIVATE apac)
+add_test(NAME ApacTests COMMAND tests)
