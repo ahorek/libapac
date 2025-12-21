@@ -1,0 +1,48 @@
+<app_info>
+
+<app>
+    <name>genefer_wr</name>
+    <user_friendly_name>GFN-22</user_friendly_name>
+    <fraction_done_exact/>
+</app>
+
+<file_info>
+    <name>genefercpu</name>
+    <executable/>
+</file_info>
+
+<file_info>
+    <name>geneferg</name>
+    <executable/>
+</file_info>
+
+<app_version>
+    <app_name>genefer_wr</app_name>
+    <avg_ncpus>16</avg_ncpus>
+    <cmdline>-t 16</cmdline>
+    <version_num>410</version_num>
+    <api_version>7.20.2</api_version>
+    <file_ref>
+        <file_name>genefercpu</file_name>
+        <main_program/>
+    </file_ref>
+    <plan_class>cpu_GFN22mt</plan_class>
+</app_version>
+
+<app_version>
+    <app_name>genefer_wr</app_name>
+    <avg_ncpus>0.01</avg_ncpus>
+    <version_num>410</version_num>
+    <api_version>7.20.2</api_version>
+    <file_ref>
+        <file_name>geneferg</file_name>
+        <main_program/>
+    </file_ref>
+    <plan_class>OCLcudaGFNWR</plan_class>
+    <coproc>
+        <type>CUDA</type>
+        <count>1</count>
+    </coproc>
+</app_version>
+
+</app_info>
