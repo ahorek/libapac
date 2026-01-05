@@ -273,11 +273,17 @@ if (BUILD_EXAMPLES)
 
     message(STATUS "Building examples")
 
+    set(EXAMPLES_LIBS ${apac_target})
+    find_library(MATH_LIBRARY m)
+    if (MATH_LIBRARY)
+        list(APPEND EXAMPLES_LIBS ${MATH_LIBRARY})
+    endif()
+
     # factorial
     add_executable(factorial
         examples/factorial.c
     )
-    target_link_libraries(factorial PRIVATE ${apac_target})
+    target_link_libraries(factorial PRIVATE ${EXAMPLES_LIBS})
     target_include_directories(factorial PRIVATE
         ${CMAKE_SOURCE_DIR}/include
     )
@@ -286,14 +292,7 @@ if (BUILD_EXAMPLES)
     add_executable(fibonacci
         examples/fibonacci.c
     )
-
-    set(FIBONACCI_LIBS ${apac_target})
-    find_library(MATH_LIBRARY m)
-    if (MATH_LIBRARY)
-        list(APPEND FIBONACCI_LIBS ${MATH_LIBRARY})
-    endif()
-
-    target_link_libraries(fibonacci PRIVATE ${FIBONACCI_LIBS})
+    target_link_libraries(fibonacci PRIVATE ${EXAMPLES_LIBS})
     target_include_directories(fibonacci PRIVATE
         ${CMAKE_SOURCE_DIR}/include
     )
