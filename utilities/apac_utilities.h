@@ -1,6 +1,8 @@
 #ifndef APAC_UTILITIES_H
 #define APAC_UTILITIES_H
 
+#define _GNU_SOURCE
+
 #include <stdint.h>
 #include "../include/apac.h"
 
