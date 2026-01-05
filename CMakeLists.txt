@@ -286,6 +286,9 @@ if (BUILD_EXAMPLES)
     add_executable(fibonacci
         examples/fibonacci.c
     )
+    if (UNIX AND NOT APPLE)
+        target_link_libraries(fibonacci PRIVATE m)
+    endif()
     target_link_libraries(fibonacci PRIVATE ${apac_target})
     target_include_directories(fibonacci PRIVATE
         ${CMAKE_SOURCE_DIR}/include
