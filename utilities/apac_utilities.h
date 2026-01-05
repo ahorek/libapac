@@ -17,10 +17,11 @@
 
     #if defined(__linux__) || defined(__linux)
     
+        #include <stdio.h>
+        #include <unistd.h>
         #include <pthread.h>
         #include <sched.h>
         #include <time.h>
-        #include <ustdint.h>
 
     #endif
 
