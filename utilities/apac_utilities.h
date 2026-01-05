@@ -20,6 +20,7 @@
         #include <pthread.h>
         #include <sched.h>
         #include <time.h>
+        #include <ustdint.h>
 
     #endif
 
