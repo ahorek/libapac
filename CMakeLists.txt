@@ -278,18 +278,20 @@ if (BUILD_EXAMPLES)
         fibonacci
     )
 
+    set(EXAMPLES_LIBS ${apac_target})
+    find_library(MATH_LIBRARY m)
+    if (MATH_LIBRARY)
+        list(APPEND EXAMPLES_LIBS ${MATH_LIBRARY})
+    endif()
+
     foreach(exe IN LISTS APAC_EXAMPLES)
         add_executable(${exe} examples/${exe}.c)
 
-        target_link_libraries(${exe} PRIVATE ${apac_target})
+        target_link_libraries(${exe} PRIVATE ${EXAMPLES_LIBS})
 
         target_include_directories(${exe} PRIVATE
             ${CMAKE_SOURCE_DIR}/include
         )
-
-        if (UNIX AND NOT APPLE)
-            target_link_libraries(${exe} PRIVATE m)
-        endif()
     endforeach()
 
 endif()
