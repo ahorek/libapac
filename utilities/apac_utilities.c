@@ -28,7 +28,7 @@ uint64_t cpu_timer(void)
 #elif (defined(__GNUC__) || defined(__clang__)) && \
       (defined(__aarch64__) || defined(__arm64__))
 
-    __isb();
+    __asm__ volatile("isb" ::: "memory");
     uint64_t cnt = __arm_rsr64("cntvct_el0");
     uint64_t frq = __arm_rsr64("cntfrq_el0");
     return (cnt * 1000000000ULL) / frq;
