@@ -29,8 +29,9 @@ uint64_t cpu_timer(void)
       (defined(__aarch64__) || defined(__arm64__))
 
     __asm__ volatile("isb" ::: "memory");
-    uint64_t cnt = __arm_rsr64("cntvct_el0");
-    uint64_t frq = __arm_rsr64("cntfrq_el0");
+    uint64_t cnt, frq;
+    __asm__ volatile("mrs %0, cntvct_el0" : "=r"(cnt));
+    __asm__ volatile("mrs %0, cntfrq_el0" : "=r"(frq));
     return (cnt * 1000000000ULL) / frq;
 
 #else
