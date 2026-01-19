@@ -201,8 +201,6 @@ typedef enum
                 "FILE: %s\nLINE: %d\n",                     \
                 #expr, __FILE__, __LINE__                   \
             );                                              \
-            fprintf(stderr, "EXITING ...\n\n");             \
-            break;                             \
         }                                                   \
     } while (0)
 
