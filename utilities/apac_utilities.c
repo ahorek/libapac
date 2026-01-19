@@ -41,7 +41,7 @@ uint64_t cpu_timer(void)
 
 uint64_t os_timer(void)
 {
-#if defined(_WIN32)
+#if defined(_MSC_VER)
 
     static uint64_t freq = 0;
     LARGE_INTEGER t;
@@ -58,7 +58,7 @@ uint64_t os_timer(void)
     return (uint64_t)((t.QuadPart * 1000000000ULL) / freq);
 
 #elif (defined(__linux__)  || defined(__linux) || \
-       defined(__unix__)   || defined(__unix))
+       defined(__unix__)   || defined(__unix) || defined(_WIN32))
 
     struct timespec ts;
 
@@ -128,7 +128,7 @@ void set_to_random(apn_seg_t* op1, apn_size_t size)
 
 int pin_curr_thread_to_core(uint32_t core_id)
 {
-#if defined(_WIN32)
+#if defined(_MSC_VER)
 
     SYSTEM_INFO sysinfo;
     GetSystemInfo(&sysinfo);
@@ -161,7 +161,7 @@ int pin_curr_thread_to_core(uint32_t core_id)
 }
 
 
-#if defined(_WIN32)
+#if defined(_MSC_VER)
 
     static GUID* CurrentScheme;
     static DWORD CurrentMode;
@@ -170,7 +170,7 @@ int pin_curr_thread_to_core(uint32_t core_id)
 
 void disable_turbo_boost(void)
 {
-#if defined(_WIN32)
+#if defined(_MSC_VER)
 
     PowerGetActiveScheme(NULL, &CurrentScheme);
 
@@ -209,7 +209,7 @@ void disable_turbo_boost(void)
 
 void restore_turbo_boost(void)
 {
-#if defined(_WIN32) && (defined(_M_X64) || defined(_M_AMD64))
+#if defined(_MSC_VER) && (defined(_M_X64) || defined(_M_AMD64))
 
     PowerWriteACValueIndex(NULL, CurrentScheme, &GUID_PROCESSOR_SETTINGS_SUBGROUP, &GUID_PROCESSOR_PERF_BOOST_MODE, CurrentMode);
 

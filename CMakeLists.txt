@@ -27,14 +27,31 @@ if (WIN32)
 
         endif()
 
+        if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
+            message(STATUS "Enabling MASM64 assembler")
+            enable_language(ASM_MASM)
+        endif()
+
+    elseif (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        message(STATUS "Compiler: GCC (MINGW)")
+        enable_language(ASM_MASM)
+        # set(CMAKE_ASM_MASM_COMPILER "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/ml64.exe")
+
+        find_program(MASM_COMPILER
+            NAMES ml64.exe
+            HINTS
+                "$ENV{ProgramFiles}/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC"
+        )
+
+        if(MASM_COMPILER)
+            message(STATUS "Found MASM at ${MASM_COMPILER}")
+            set(CMAKE_ASM_MASM_COMPILER "${MASM_COMPILER}")
+        else()
+            message(FATAL_ERROR "MASM compiler (ml64.exe) not found. Please install Visual Studio with Desktop development for C++")
+        endif()
+
     else ()
         message(FATAL_ERROR "Unsupported compiler on Windows: ${CMAKE_C_COMPILER_ID}")
-
-    endif()
-
-    if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
-        message(STATUS "Enabling MASM64 assembler")
-        enable_language(ASM_MASM)
 
     endif()
 
@@ -218,8 +235,8 @@ target_compile_definitions(${apac_target} PRIVATE
 
 # --- STRIP PATHS FROM __FILE__ -------------------------------------------------
 
-if (MSVC)
-    target_compile_options(${apac_target} PRIVATE $<$<COMPILE_LANGUAGE:C>:/d1trimfile:${CMAKE_SOURCE_DIR}/>)
+if (MSVC OR WIN32)
+    #target_compile_options(${apac_target} PRIVATE $<$<COMPILE_LANGUAGE:C>:/d1trimfile:${CMAKE_SOURCE_DIR}/>)
 else()
     # For GCC/Clang, use -ffile-prefix-map to strip the build path
     target_compile_options(${apac_target} PRIVATE 
