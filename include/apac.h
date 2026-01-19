@@ -190,8 +190,6 @@ typedef enum
  * @param expr Boolean expression to validate.
  */
 #define APAC_ALWAYS_ASSERT(expr)                            \
-    do                                                      \
-    {                                                       \
         if (!(expr))                                        \
         {                                                   \
             fprintf(                                        \
@@ -201,10 +199,7 @@ typedef enum
                 "FILE: %s\nLINE: %d\n",                     \
                 #expr, __FILE__, __LINE__                   \
             );                                              \
-            fprintf(stderr, "EXITING ...\n\n");             \
-            exit(EXIT_FAILURE);                             \
         }                                                   \
-    } while (0)
 
 
 /* ============================================================================
