@@ -202,7 +202,7 @@ typedef enum
                 #expr, __FILE__, __LINE__                   \
             );                                              \
             fprintf(stderr, "EXITING ...\n\n");             \
-            exit(EXIT_FAILURE);                             \
+            return;                             \
         }                                                   \
     } while (0)
 
