@@ -194,6 +194,30 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
 # --- AArch64 SPECIFIC SOURCES --------------------------------------------------
 
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|AARCH64")
+    set(arm64_c_sources
+        "src/apn/arm64/set.c"
+        "src/apn/arm64/cmp.c"
+        "src/apn/arm64/cpy.c"
+        "src/apn/arm64/is_zero.c"
+        "src/apn/arm64/cpu_params.c"
+    )
+
+    message(STATUS "Using SYSV-ABI x64 assembly sources")
+    set(arm64_asm_sources
+            "src/apn/arm64/sysv_abi/add_n.s"
+            "src/apn/arm64/sysv_abi/add_one.s"
+            "src/apn/arm64/sysv_abi/mul_bc.s"
+            "src/apn/arm64/sysv_abi/addmul_one.s"
+            "src/apn/arm64/sysv_abi/submul_one.s"
+            "src/apn/arm64/sysv_abi/sqr_bc.s"
+            "src/apn/arm64/sysv_abi/sub_n.s"
+            "src/apn/arm64/sysv_abi/sub_one.s"
+            "src/apn/arm64/sysv_abi/neg.s"
+            "src/apn/arm64/sysv_abi/lshift_lt64.s"
+            "src/apn/arm64/sysv_abi/rshift_lt64.s"
+    )
+
+    set(arm64_specific "src/apn/arm64/arm64_hidden_funcs.h" ${arm64_c_sources} ${arm64_asm_sources})
 
 endif()
 
@@ -213,7 +237,7 @@ set(hidden_headers
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
     set(isa_sources ${x64_specific})
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "AARCH64|aarch64")
-
+    set(isa_sources ${arm64_specific})
 endif()
 
 set(apac_sources ${apac_c_sources} ${isa_sources} ${hidden_headers})

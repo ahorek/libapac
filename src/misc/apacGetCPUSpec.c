@@ -146,5 +146,10 @@ void apacGetCPUSpec(void)
 	}
 }
 
+#elif defined(_M_ARM64) || defined(__aarch64__) || defined(__arm64__)
+	extern void generic_arm64_set_params(void);
 
+	void apacGetCPUSpec(void) {
+		generic_arm64_set_params();
+	}
 #endif
