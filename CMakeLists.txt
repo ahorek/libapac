@@ -206,15 +206,15 @@ elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|AARCH64")
     set(arm64_asm_sources
             "src/apn/arm64/sysv_abi/add_n.s"
             "src/apn/arm64/sysv_abi/add_one.s"
-            #"src/apn/arm64/sysv_abi/mul_bc.s"
-            #"src/apn/arm64/sysv_abi/addmul_one.s"
-            #"src/apn/arm64/sysv_abi/submul_one.s"
-            #"src/apn/arm64/sysv_abi/sqr_bc.s"
+            "src/apn/arm64/sysv_abi/mul_bc.s"
+            "src/apn/arm64/sysv_abi/addmul_one.s"
+            "src/apn/arm64/sysv_abi/submul_one.s"
+            "src/apn/arm64/sysv_abi/sqr_bc.s"
             "src/apn/arm64/sysv_abi/sub_n.s"
             "src/apn/arm64/sysv_abi/sub_one.s"
             "src/apn/arm64/sysv_abi/neg.s"
-            #"src/apn/arm64/sysv_abi/lshift_lt64.s"
-            #"src/apn/arm64/sysv_abi/rshift_lt64.s"
+            "src/apn/arm64/sysv_abi/lshift_lt64.s"
+            "src/apn/arm64/sysv_abi/rshift_lt64.s"
     )
 
     set(arm64_specific "src/apn/arm64/arm64_hidden_funcs.h" ${arm64_c_sources} ${arm64_asm_sources})
