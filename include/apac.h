@@ -195,13 +195,13 @@ typedef enum
         if (!(expr))                                        \
         {                                                   \
             fprintf(                                        \
-                stderr,                                     \
+                stdout,                                     \
                 "\n\nAPAC ASSERTION FAILED!\n"              \
                 "ASSERTION: %s\n"                           \
                 "FILE: %s\nLINE: %d\n",                     \
                 #expr, __FILE__, __LINE__                   \
             );                                              \
-            fprintf(stderr, "EXITING ...\n\n");             \
+            fprintf(stdout, "EXITING ...\n\n");             \
             return;                             \
         }                                                   \
     } while (0)

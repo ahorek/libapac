@@ -266,6 +266,7 @@ static void check_apn_add_one(void)
 		set_to_random(op1, i);
 		apn_seg_t carry_out = apn_add_one(op2, op1, i, 0);
 
+        printf("result: %d\n", carry_out);
         APAC_ALWAYS_ASSERT(carry_out == 0);
 
 		int is_equal = apn_cmp(op1, op2, i);
