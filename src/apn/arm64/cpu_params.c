@@ -21,7 +21,7 @@ void generic_arm64_set_params(void)
 	//curr_cpu.apn_rshift_lt64_ptr    = rshift_lt64_arm64;
 	//curr_cpu.apn_mul_bc_ptr         = mul_bc_arm64;
 	//curr_cpu.apn_sqr_bc_ptr         = sqr_bc_arm64;
-	curr_cpu.apn_neg_ptr            = neg_arm64;*/
+	curr_cpu.apn_neg_ptr            = neg_arm64;
 	curr_cpu.apn_set_ptr            = set_asimd_4unroll;
 	curr_cpu.apn_cpy_ptr            = cpy_asimd_4unroll;
 	curr_cpu.apn_cmp_ptr            = cmp_asimd_4unroll;
