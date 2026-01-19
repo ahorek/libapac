@@ -10,10 +10,10 @@
     //   x2 -> size         (apn_size_t)
 
 .text
-.globl sqr_bc_aarch64
-.type  sqr_bc_aarch64, @function
+.globl sqr_bc_arm64
+.type  sqr_bc_arm64, @function
 
-sqr_bc_aarch64:
+sqr_bc_arm64:
     // Save registers
     stp     x19, x20, [sp, #-64]!
     stp     x21, x22, [sp, #16]
@@ -26,14 +26,14 @@ sqr_bc_aarch64:
     sub     x20, x20, #1    // x20 = size - 1 (for triangular matrix)
     
     // Check if size == 1
-    cbz     x20, .Laarch64_pass3  // If size-1 == 0, skip to diagonal squares
+    cbz     x20, .Larm64_pass3  // If size-1 == 0, skip to diagonal squares
     
     // PASS-1: Accumulate non-diagonal products once
     
     mov     x21, xzr        // x21 = counter (starts at 0)
     mov     x22, xzr        // x22 = previous carry accumulator
 
-.Laarch64_pass1_outer_loop:
+.Larm64_pass1_outer_loop:
     mov     x23, x20        // x23 = inner loop counter (size-1)
     mov     x24, xzr        // x24 = temp_reg
     ldr     x25, [x1, x21]  // x25 = op1[i] (base + offset)
@@ -46,7 +46,7 @@ sqr_bc_aarch64:
     add     x4, x4, #8      // x4 = &result[2*i+1]
 
 .p2align 4
-.Laarch64_pass1_inner_loop:
+.Larm64_pass1_inner_loop:
     // Load op1[j] where j = i+1, i+2, ...
     ldr     x5, [x26], #8   // x5 = op1[j]
     
@@ -68,9 +68,9 @@ sqr_bc_aarch64:
     
     // Decrement inner loop counter
     subs    x23, x23, #1
-    bne     .Laarch64_pass1_inner_loop
+    bne     .Larm64_pass1_inner_loop
 
-.Laarch64_pass1_outer_loop_end:
+.Larm64_pass1_outer_loop_end:
     // Store final carry
     ldr     x8, [x4]        // Load next result limb
     adds    x8, x8, x24     // Add final temp_reg
@@ -79,11 +79,11 @@ sqr_bc_aarch64:
     // Prepare for next outer iteration
     add     x21, x21, #8    // Increment counter by 1 limb (8 bytes)
     subs    x20, x20, #1    // Decrement outer loop counter
-    bne     .Laarch64_pass1_outer_loop
+    bne     .Larm64_pass1_outer_loop
     
     // PASS-2: Shift left accumulated non-diagonal products by 1 bit
     
-.Laarch64_pass2:
+.Larm64_pass2:
     // We need to shift result[1] through result[2n-2] left by 1
     // Process two limbs at a time
     add     x4, x0, #8      // x4 = &result[1]
@@ -93,7 +93,7 @@ sqr_bc_aarch64:
     // Clear carry flag to start
     mov     x21, xzr        // Use x21 as carry accumulator
 
-.Laarch64_pass2_loop:
+.Larm64_pass2_loop:
     // Load two limbs
     ldp     x5, x6, [x4]    // x5 = result[i], x6 = result[i+1]
     
@@ -108,27 +108,27 @@ sqr_bc_aarch64:
     
     // Decrement counter
     subs    x20, x20, #1
-    bne     .Laarch64_pass2_loop
+    bne     .Larm64_pass2_loop
 
     // Handle final carry if any
     // The final carry goes into result[2n-1]
     adc     x21, x21, xzr   // Capture final carry
-    cbz     x21, .Laarch64_pass2_end
+    cbz     x21, .Larm64_pass2_end
     ldr     x5, [x4]        // Load result[2n-1]
     adds    x5, x5, x21     // Add carry
     str     x5, [x4]        // Store back
 
-.Laarch64_pass2_end:
+.Larm64_pass2_end:
 
     // PASS-3: Accumulate diagonal products (squares)
     
-.Laarch64_pass3:
+.Larm64_pass3:
     mov     x4, x0          // x4 = result pointer
     mov     x5, x1          // x5 = op1 pointer
     mov     x20, x19        // x20 = size (loop counter)
     mov     x21, xzr        // x21 = carry accumulator from previous iteration
 
-.Laarch64_pass3_loop:
+.Larm64_pass3_loop:
     // Load op1[i]
     ldr     x22, [x5], #8   // x22 = op1[i]
     
@@ -155,9 +155,9 @@ sqr_bc_aarch64:
     
     // Decrement loop counter
     subs    x20, x20, #1
-    bne     .Laarch64_pass3_loop
+    bne     .Larm64_pass3_loop
 
-.Laarch64_end_of_func:
+.Larm64_end_of_func:
     // Restore registers and return
     ldp     x25, x26, [sp, #48]
     ldp     x23, x24, [sp, #32]
@@ -165,6 +165,6 @@ sqr_bc_aarch64:
     ldp     x19, x20, [sp], #64
     ret
 
-.size sqr_bc_aarch64, .-sqr_bc_aarch64
+.size sqr_bc_arm64, .-sqr_bc_arm64
 
 .section .note.GNU-stack,"",@progbits
