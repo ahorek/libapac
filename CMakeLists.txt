@@ -202,7 +202,7 @@ elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|AARCH64")
         "src/apn/arm64/cpu_params.c"
     )
 
-    message(STATUS "Using SYSV-ABI x64 assembly sources")
+    message(STATUS "Using SYSV-ABI ARM64 assembly sources")
     set(arm64_asm_sources
             "src/apn/arm64/sysv_abi/add_n.s"
             "src/apn/arm64/sysv_abi/add_one.s"
