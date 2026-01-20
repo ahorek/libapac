@@ -161,7 +161,8 @@ void apacGetCPUSpec(void)
 		if(hasASIMD) {
 			generic_arm64_set_params();
 		} else {
-			#error "No ASIMD support!"
+			fprintf(stderr, "No ASIMD support!");
+			exit(EXIT_FAILURE);
 		}
 	}
 #endif
