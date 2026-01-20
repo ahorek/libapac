@@ -150,6 +150,18 @@ void apacGetCPUSpec(void)
 	extern void generic_arm64_set_params(void);
 
 	void apacGetCPUSpec(void) {
-		generic_arm64_set_params();
+		int hasASIMD = 0;
+		#if defined(_WIN32) || defined(__APPLE__)
+      	  int hasASIMD = 1;
+		#elif defined(__linux__)
+  		  uint64_t hwcap = getauxval(AT_HWCAP);
+          hasASIMD = hwcap & HWCAP_ASIMD;
+		#endif
+
+		if(hasASIMD) {
+			generic_arm64_set_params();
+		} else {
+			#error "No ASIMD support!"
+		}
 	}
 #endif

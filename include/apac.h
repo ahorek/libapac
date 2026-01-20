@@ -95,6 +95,11 @@
             #include <arm_acle.h>
             #include <arm_neon.h>
 
+            #if defined(__linux__)
+                #include <sys/auxv.h>
+                #include <asm/hwcap.h>
+            #endif
+
 		#else
 			#error "Unsupported Architecture on Linux/Unix/MacOS and GCC/Clang!"
         #endif
