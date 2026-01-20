@@ -320,9 +320,11 @@ if (BUILD_EXAMPLES)
     )
 
     set(EXAMPLES_LIBS ${apac_target})
-    find_library(MATH_LIBRARY m)
-    if (MATH_LIBRARY)
-        list(APPEND EXAMPLES_LIBS ${MATH_LIBRARY})
+    include(CheckLibraryExists)
+    check_library_exists(m sin "" HAVE_LIBM)
+
+    if (HAVE_LIBM)
+        list(APPEND EXAMPLES_LIBS m)
     endif()
 
     foreach(exe IN LISTS APAC_EXAMPLES)
