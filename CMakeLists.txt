@@ -259,8 +259,8 @@ target_compile_definitions(${apac_target} PRIVATE
 
 # --- STRIP PATHS FROM __FILE__ -------------------------------------------------
 
-if (MSVC OR WIN32)
-    #target_compile_options(${apac_target} PRIVATE $<$<COMPILE_LANGUAGE:C>:/d1trimfile:${CMAKE_SOURCE_DIR}/>)
+if (MSVC)
+    target_compile_options(${apac_target} PRIVATE $<$<COMPILE_LANGUAGE:C>:/d1trimfile:${CMAKE_SOURCE_DIR}/>)
 else()
     # For GCC/Clang, use -ffile-prefix-map to strip the build path
     target_compile_options(${apac_target} PRIVATE 
