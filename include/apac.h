@@ -92,7 +92,8 @@
         
         #elif defined(__aarch64__) || defined(__arm64__)
 
-            #include <arm_acle.h>                
+            #include <arm_acle.h>
+            #include <arm_neon.h>
 
 		#else
 			#error "Unsupported Architecture on Linux/Unix/MacOS and GCC/Clang!"
@@ -202,7 +203,7 @@ typedef enum
                 #expr, __FILE__, __LINE__                   \
             );                                              \
             fprintf(stdout, "EXITING ...\n\n");             \
-            return;                             \
+            exit(1);                             \
         }                                                   \
     } while (0)
 

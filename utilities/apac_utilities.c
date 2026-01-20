@@ -150,8 +150,11 @@ int pin_curr_thread_to_core(uint32_t core_id)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     CPU_SET(core_id, &cpuset);
-    pthread_t thread = pthread_self();
-    return (pthread_setaffinity_np(thread, sizeof(cpu_set_t), &cpuset) == 0) ? 0 : -1;
+    // pthread_t thread = pthread_self();
+    // return (pthread_setaffinity_np(thread, sizeof(cpu_set_t), &cpuset) == 0) ? 0 : -1;
+    pid_t tid = gettid();
+    return sched_setaffinity(tid, sizeof(cpu_set_t), &cpuset) == 0 ? 0 : -1;
+
 
 #else
 
